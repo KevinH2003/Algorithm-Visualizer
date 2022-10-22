@@ -1,12 +1,13 @@
 import * as React from 'react';
-import NodeContainer from './Components/NodeContainer';
+import BoxContainer from './Components/BoxContainer';
+import { v4 as uuid } from 'uuid';
 
 function App() {
-  const [nodes, setNodes] = React.useState([]);
-  const [numNodes, setNumNodes] = React.useState(0);
-  const [indices, setIndices] = React.useState([0, 1]);
+  const [boxes, setBoxes] = React.useState([]);
+  const [numBoxes, setNumBoxes] = React.useState(0);
+  const [indices, setIndices] = React.useState([0]);
 
-  const nodeContainerStyle = {
+  const boxContainerStyle = {
     position: "relative",
     top: "100px",
     display: "flex",
@@ -22,25 +23,34 @@ function App() {
     "align-items": "center"
   }
 
-  function addNode(e){
-    setNodes(prevNodes => {
-      return [...prevNodes, {id: 1, name: numNodes, color: "orange"}]
+  function addBox(e){
+    setBoxes(prevBoxes => {
+      const newNode = {id: numBoxes, name: numBoxes, color: "orange"};
+      return [...prevBoxes, newNode]
     })
-    setNumNodes(prevNum => {
+    setNumBoxes(prevNum => {
       return prevNum + 1
     })
   }
 
-  function highlightNode(e){
+  function removeBox(id){
+    setBoxes(currBoxes => {
+      currBoxes.filter(box => {
+        return box.id !== id
+      })
+    })
+  }
+
+  function highlightBox(e){
     let number = indices[0]
-    const newState = () => nodes.map(node => {
-      if (node.name === number){
-        return {...node, color: "green"};
+    const newState = () => boxes.map(box => {
+      if (box.name === number){
+        return {...box, color: "green"};
       } else {
-        return node;
+        return box;
       }
     })
-    setNodes(newState);
+    setBoxes(newState);
     setIndices(prevIndices => {
       return [prevIndices[0] + 1, ...prevIndices]
     })
@@ -48,12 +58,12 @@ function App() {
 
   return (
     <>
-      <div style={nodeContainerStyle}>
-        <NodeContainer nodes={nodes}/>
+      <div style={boxContainerStyle}>
+        <BoxContainer boxes={boxes}/>
       </div>
       <div style = {buttonStyle}>
-        <button onClick={addNode}>Test</button>
-        <button onClick={highlightNode}>Highlight</button>
+        <button onClick={addBox}>Test</button>
+        <button onClick={highlightBox}>Highlight</button>
       </div>
     </>
   );
