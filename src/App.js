@@ -62,7 +62,7 @@ function App() {
         <BoxContainer boxes={boxes}/>
       </div>
       <div style = {buttonStyle}>
-        <button onClick={addBox}>Test</button>
+        <button onClick={addBox}>New Element</button>
         <button onClick={highlightBox}>Highlight</button>
       </div>
     </>

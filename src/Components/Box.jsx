@@ -3,13 +3,14 @@ import React from 'react'
 
 export default function Box({box}) {
   const [visible, setVisible] = React.useState(true);
+  const [boxColor, setColor] = React.useState(box.color);
 
   const mystyle = {
     color: "black",
     width: "50px",
     height: "30px",
     margin: "10px 10px",
-    backgroundColor: box.color,
+    backgroundColor: boxColor,
     textAlign: "center",
   }
 
@@ -23,9 +24,14 @@ export default function Box({box}) {
     transition: {duration: 0.15},
   }
 
+  function changeColor(){
+    setColor("green")
+  }
+
   function vanish(){
     setVisible(false)
   }
+
   if (!visible){
     return
   }
@@ -39,7 +45,7 @@ export default function Box({box}) {
       exit = {{opacity: 0}}
       whileHover = {expand}
       whileTap = {squish}
-      onClick = {vanish}
+      onClick = {changeColor}
       >
         {box.name}
       </motion.button>
