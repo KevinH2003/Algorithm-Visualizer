@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react'
 
-export default function Box({box}) {
+export default function Box({box, removeIndex}) {
   const [visible, setVisible] = React.useState(true);
   const [boxColor, setColor] = React.useState(box.color);
 
@@ -12,6 +12,7 @@ export default function Box({box}) {
     margin: "10px 10px",
     backgroundColor: boxColor,
     textAlign: "center",
+    visibility: box.visibility,
   }
 
   const expand = {
@@ -22,6 +23,9 @@ export default function Box({box}) {
   const squish = {
     scale: 0.8,
     transition: {duration: 0.15},
+  }
+
+  function test(){
   }
 
   function changeColor(){

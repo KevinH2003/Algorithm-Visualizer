@@ -6,6 +6,7 @@ function App() {
   const [boxes, setBoxes] = React.useState([]);
   const [numBoxes, setNumBoxes] = React.useState(0);
   const [indices, setIndices] = React.useState([0]);
+  const [targetNumber, setTargetNumber] = React.useState(0);
 
   const boxContainerStyle = {
     position: "relative",
@@ -25,11 +26,14 @@ function App() {
 
   function addBox(e){
     setBoxes(prevBoxes => {
-      const newNode = {id: numBoxes, name: numBoxes, color: "orange"};
-      return [...prevBoxes, newNode]
+      const newBox = {id: numBoxes, name: numBoxes, removeIndex: removeIndex, color: "orange"};
+      return [...prevBoxes, newBox]
     })
     setNumBoxes(prevNum => {
       return prevNum + 1
+    })
+    setIndices(prevIndices => {
+      return [...prevIndices, numBoxes]
     })
   }
 
@@ -56,6 +60,18 @@ function App() {
     })
   }
 
+  function removeIndex(e){
+    let index = parseInt(document.getElementById("text").value)
+    const newState = () => boxes.filter(box => box.id < index);
+    setBoxes(newState);
+  }
+
+  function test(e){
+    const newBox = {id: numBoxes, name: document.getElementById("text").value, color: "orange"};
+    setBoxes(currBoxes => {
+      return [...currBoxes, newBox]});
+  }
+
   return (
     <>
       <div style={boxContainerStyle}>
@@ -63,7 +79,8 @@ function App() {
       </div>
       <div style = {buttonStyle}>
         <button onClick={addBox}>New Element</button>
-        <button onClick={highlightBox}>Highlight</button>
+        <button onClick={removeIndex}>Highlight</button>
+        <input type="text" id="text"></input>
       </div>
     </>
   );
