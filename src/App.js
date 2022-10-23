@@ -6,7 +6,9 @@ function App() {
   const [boxes, setBoxes] = React.useState([]);
   const [numBoxes, setNumBoxes] = React.useState(0);
   const [indices, setIndices] = React.useState([0]);
-  const [targetNumber, setTargetNumber] = React.useState(0);
+  const [targetIndex, setTargetIndex] = React.useState(0);
+
+  const removing = new Event("removing");
 
   const boxContainerStyle = {
     position: "relative",
@@ -26,7 +28,7 @@ function App() {
 
   function addBox(e){
     setBoxes(prevBoxes => {
-      const newBox = {id: numBoxes, name: numBoxes, removeIndex: removeIndex, color: "orange"};
+      const newBox = {id: numBoxes, name: numBoxes, targetId: targetIndex, color: "orange"};
       return [...prevBoxes, newBox]
     })
     setNumBoxes(prevNum => {
@@ -61,9 +63,11 @@ function App() {
   }
 
   function removeIndex(e){
-    let index = parseInt(document.getElementById("text").value)
-    const newState = () => boxes.filter(box => box.id < index);
-    setBoxes(newState);
+    setTargetIndex(parseInt(document.getElementById("text").value));
+    document.dispatchEvent(removing);
+    //let index = parseInt(document.getElementById("text").value)
+    //const newState = () => boxes.filter(box => box.id < index);
+    //setBoxes(newState);
   }
 
   function test(e){
@@ -79,7 +83,7 @@ function App() {
       </div>
       <div style = {buttonStyle}>
         <button onClick={addBox}>New Element</button>
-        <button onClick={removeIndex}>Remove Elements</button>
+        <button id="removal" onClick={removeIndex}>Remove Elements</button>
         <input type="text" id="text"></input>
       </div>
     </>

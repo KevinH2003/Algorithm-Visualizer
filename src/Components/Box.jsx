@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react'
 
 export default function Box({box, removeIndex}) {
-  const [visible, setVisible] = React.useState(true);
+  const [isVisible, setVisible] = React.useState(true);
   const [boxColor, setColor] = React.useState(box.color);
 
   const mystyle = {
@@ -26,7 +26,15 @@ export default function Box({box, removeIndex}) {
   }
 
   function test(){
+    setTimeout(removeIfAbove, 50)
   }
+
+  function removeIfAbove(){
+    if (box.id > box.targetId){
+      vanish();
+    }
+  }
+  
 
   function changeColor(){
     setColor("green")
@@ -36,23 +44,24 @@ export default function Box({box, removeIndex}) {
     setVisible(false)
   }
 
-  if (!visible){
-    return
-  }
-
+  document.addEventListener("removing", test.bind(Box));
   return (
     <>
-      <motion.button
-      style={mystyle}
-      initial = {{opacity: 0}}
-      animate = {{opacity: 1}}
-      exit = {{opacity: 0}}
-      whileHover = {expand}
-      whileTap = {squish}
-      onClick = {changeColor}
-      >
-        {box.name}
-      </motion.button>
+      <AnimatePresence>
+        {isVisible &&
+          <motion.button
+          style={mystyle}
+          initial = {{opacity: 0}}
+          animate = {{opacity: 1}}
+          exit = {{opacity: 0}}
+          whileHover = {expand}
+          whileTap = {squish}
+          onClick = {changeColor}
+          >
+            {box.name}
+          </motion.button>
+        }
+      </AnimatePresence>
     </>
   )
 }
