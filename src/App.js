@@ -79,7 +79,7 @@ function App() {
       </div>
       <div style = {buttonStyle}>
         <button onClick={addBox}>New Element</button>
-        <button onClick={removeIndex}>Highlight</button>
+        <button onClick={removeIndex}>Remove Elements</button>
         <input type="text" id="text"></input>
       </div>
     </>
